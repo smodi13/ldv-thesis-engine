@@ -3,13 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  RadarChart,
-  Radar,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  ResponsiveContainer,
-  Tooltip,
+  RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
+  ResponsiveContainer, Tooltip,
 } from "recharts";
 import startups from "../data/startups.json";
 
@@ -17,20 +12,16 @@ type Startup = (typeof startups)[0];
 
 const SECTORS = ["All", "AI", "Robotics", "Software", "Biotech", "Deep Tech"];
 
-const SECTOR_COLORS: Record<string, { color: string; bg: string }> = {
-  AI: { color: "#C9A84C", bg: "rgba(201,168,76,0.12)" },
-  Robotics: { color: "#60A5FA", bg: "rgba(96,165,250,0.12)" },
-  Software: { color: "#A78BFA", bg: "rgba(167,139,250,0.12)" },
-  Biotech: { color: "#34D399", bg: "rgba(52,211,153,0.12)" },
-  "Deep Tech": { color: "#F87171", bg: "rgba(248,113,113,0.12)" },
+const SECTOR_COLORS: Record<string, string> = {
+  AI: "#C9A84C",
+  Robotics: "#3B82F6",
+  Software: "#8B5CF6",
+  Biotech: "#10B981",
+  "Deep Tech": "#EF4444",
 };
 
 const SCORE_KEYS: (keyof Startup["scores"])[] = [
-  "technicalDefensibility",
-  "marketSize",
-  "teamStrength",
-  "timing",
-  "traction",
+  "technicalDefensibility", "marketSize", "teamStrength", "timing", "traction",
 ];
 
 const SCORE_LABELS: Record<string, string> = {
@@ -41,13 +32,26 @@ const SCORE_LABELS: Record<string, string> = {
   traction: "Traction",
 };
 
+function SectionHeader() {
+  return (
+    <div className="section-header mb-14" style={{ opacity: 0 }}>
+      <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#C9A84C", letterSpacing: "0.14em" }}>
+        Curated Database
+      </p>
+      <h2 className="font-bold mb-4" style={{ fontSize: "clamp(1.8rem, 3.5vw, 2.75rem)", color: "#0F172A", letterSpacing: "-0.025em", lineHeight: 1.15 }}>
+        Startup Sourcing and Scoring
+      </h2>
+      <p style={{ color: "#64748B", maxWidth: 520, lineHeight: 1.7, fontSize: "0.95rem" }}>
+        {startups.length} emerging companies across LDV focus areas, each scored across five dimensions that matter at the early stage.
+      </p>
+    </div>
+  );
+}
+
 function ScoreBar({ score }: { score: number }) {
   return (
     <div className="flex items-center gap-3">
-      <div
-        className="flex-1 rounded-full overflow-hidden"
-        style={{ height: 4, background: "rgba(255,255,255,0.08)" }}
-      >
+      <div className="flex-1 rounded-full overflow-hidden" style={{ height: 3, background: "#F1F5F9" }}>
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${score * 10}%` }}
@@ -56,10 +60,7 @@ function ScoreBar({ score }: { score: number }) {
           style={{ background: "linear-gradient(90deg, #C9A84C, #E8C97A)" }}
         />
       </div>
-      <span
-        className="text-xs font-bold w-4 text-right"
-        style={{ color: "#C9A84C", fontVariantNumeric: "tabular-nums" }}
-      >
+      <span className="text-xs font-bold w-4 text-right" style={{ color: "#0B1426", fontVariantNumeric: "tabular-nums" }}>
         {score}
       </span>
     </div>
@@ -70,31 +71,19 @@ function FitScoreRing({ score }: { score: number }) {
   const radius = 22;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (score / 100) * circumference;
-
   return (
     <div className="flex flex-col items-center">
       <svg width="60" height="60">
-        <circle
-          cx="30" cy="30" r={radius}
-          fill="none"
-          stroke="rgba(255,255,255,0.08)"
-          strokeWidth="3"
-        />
+        <circle cx="30" cy="30" r={radius} fill="none" stroke="#F1F5F9" strokeWidth="3" />
         <motion.circle
-          cx="30" cy="30" r={radius}
-          fill="none"
-          stroke="#C9A84C"
-          strokeWidth="3"
-          strokeLinecap="round"
+          cx="30" cy="30" r={radius} fill="none" stroke="#C9A84C" strokeWidth="3" strokeLinecap="round"
           strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
           animate={{ strokeDashoffset: offset }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           transform="rotate(-90 30 30)"
         />
-        <text x="30" y="35" textAnchor="middle" fontSize="14" fontWeight="700" fill="#C9A84C">
-          {score}
-        </text>
+        <text x="30" y="35" textAnchor="middle" fontSize="14" fontWeight="700" fill="#0B1426">{score}</text>
       </svg>
       <span className="text-xs font-medium mt-1" style={{ color: "#94A3B8" }}>Fit Score</span>
     </div>
@@ -103,12 +92,9 @@ function FitScoreRing({ score }: { score: number }) {
 
 function StartupModal({ startup, onClose }: { startup: Startup; onClose: () => void }) {
   const radarData = SCORE_KEYS.map((key) => ({
-    subject: SCORE_LABELS[key],
-    score: startup.scores[key],
-    fullMark: 10,
+    subject: SCORE_LABELS[key], score: startup.scores[key], fullMark: 10,
   }));
-
-  const sc = SECTOR_COLORS[startup.sector] ?? { color: "#C9A84C", bg: "rgba(201,168,76,0.12)" };
+  const sectorColor = SECTOR_COLORS[startup.sector] ?? "#C9A84C";
 
   return (
     <motion.div
@@ -116,66 +102,48 @@ function StartupModal({ startup, onClose }: { startup: Startup; onClose: () => v
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(5,10,20,0.85)", backdropFilter: "blur(8px)" }}
+      style={{ background: "rgba(15,23,42,0.5)", backdropFilter: "blur(8px)" }}
       onClick={onClose}
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.94, y: 20 }}
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.94, y: 10 }}
+        exit={{ opacity: 0, scale: 0.95, y: 10 }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="rounded-2xl shadow-2xl overflow-hidden"
+        className="rounded-2xl overflow-hidden"
         style={{
-          background: "#162035",
-          border: "1px solid rgba(255,255,255,0.1)",
+          background: "white",
+          border: "1px solid #E2E8F0",
+          boxShadow: "0 24px 80px rgba(0,0,0,0.12)",
           maxWidth: 680,
           width: "100%",
         }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div
-          className="px-8 py-6"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
-        >
+        <div className="px-8 py-6" style={{ borderBottom: "1px solid #E2E8F0" }}>
           <div className="flex items-start justify-between">
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <span
-                  className="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"
-                  style={{ background: sc.bg, color: sc.color, letterSpacing: "0.08em" }}
+                  className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"
+                  style={{ color: sectorColor, background: `${sectorColor}14`, letterSpacing: "0.08em" }}
                 >
                   {startup.sector}
                 </span>
-                <span
-                  className="text-xs font-medium px-2.5 py-1 rounded-full"
-                  style={{
-                    background: "rgba(255,255,255,0.07)",
-                    color: "#94A3B8",
-                  }}
-                >
+                <span className="text-xs font-medium px-2.5 py-1 rounded-full" style={{ background: "#F8F9FC", color: "#64748B", border: "1px solid #E2E8F0" }}>
                   {startup.stage}
                 </span>
               </div>
-              <h3 className="text-2xl font-bold mb-1.5" style={{ color: "white" }}>
-                {startup.name}
-              </h3>
-              <p className="text-sm" style={{ color: "#94A3B8", lineHeight: 1.6 }}>
-                {startup.description}
-              </p>
+              <h3 className="text-2xl font-bold mb-1.5" style={{ color: "#0F172A" }}>{startup.name}</h3>
+              <p className="text-sm" style={{ color: "#64748B", lineHeight: 1.6 }}>{startup.description}</p>
             </div>
             <button
               onClick={onClose}
-              className="ml-4 mt-1 p-2 rounded-lg flex-shrink-0 transition-colors duration-150"
-              style={{ color: "#64748B" }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(255,255,255,0.07)";
-                e.currentTarget.style.color = "white";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = "#64748B";
-              }}
+              className="ml-4 mt-1 p-2 rounded-lg flex-shrink-0 transition-all duration-150"
+              style={{ color: "#94A3B8" }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "#F8F9FC"; e.currentTarget.style.color = "#64748B"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#94A3B8"; }}
             >
               <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -184,46 +152,21 @@ function StartupModal({ startup, onClose }: { startup: Startup; onClose: () => v
           </div>
         </div>
 
-        {/* Charts */}
-        <div
-          className="grid grid-cols-2"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
-        >
-          <div
-            className="p-8"
-            style={{ borderRight: "1px solid rgba(255,255,255,0.08)" }}
-          >
-            <p
-              className="text-xs font-semibold uppercase tracking-widest mb-5"
-              style={{ color: "#94A3B8", letterSpacing: "0.1em" }}
-            >
+        {/* Content grid */}
+        <div className="grid grid-cols-2" style={{ borderBottom: "1px solid #E2E8F0" }}>
+          <div className="p-8" style={{ borderRight: "1px solid #E2E8F0" }}>
+            <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: "#94A3B8", letterSpacing: "0.1em" }}>
               Scoring Radar
             </p>
             <div style={{ height: 210 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <RadarChart data={radarData} margin={{ top: 8, right: 20, bottom: 8, left: 20 }}>
-                  <PolarGrid stroke="rgba(255,255,255,0.08)" />
-                  <PolarAngleAxis
-                    dataKey="subject"
-                    tick={{ fontSize: 9, fill: "#64748B", fontWeight: 600 }}
-                  />
+                  <PolarGrid stroke="#F1F5F9" />
+                  <PolarAngleAxis dataKey="subject" tick={{ fontSize: 9, fill: "#94A3B8", fontWeight: 600 }} />
                   <PolarRadiusAxis domain={[0, 10]} tick={false} axisLine={false} />
-                  <Radar
-                    name={startup.name}
-                    dataKey="score"
-                    stroke="#C9A84C"
-                    fill="#C9A84C"
-                    fillOpacity={0.15}
-                    strokeWidth={2}
-                  />
+                  <Radar name={startup.name} dataKey="score" stroke="#C9A84C" fill="#C9A84C" fillOpacity={0.12} strokeWidth={2} />
                   <Tooltip
-                    contentStyle={{
-                      background: "#0B1426",
-                      border: "1px solid rgba(201,168,76,0.3)",
-                      borderRadius: 10,
-                      fontSize: 12,
-                      color: "white",
-                    }}
+                    contentStyle={{ background: "white", border: "1px solid #E2E8F0", borderRadius: 10, fontSize: 12, boxShadow: "0 4px 16px rgba(0,0,0,0.08)" }}
                     formatter={(value) => [`${value}/10`, ""] as [string, string]}
                   />
                 </RadarChart>
@@ -233,10 +176,7 @@ function StartupModal({ startup, onClose }: { startup: Startup; onClose: () => v
 
           <div className="p-8">
             <div className="flex items-start justify-between mb-6">
-              <p
-                className="text-xs font-semibold uppercase tracking-widest"
-                style={{ color: "#94A3B8", letterSpacing: "0.1em" }}
-              >
+              <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#94A3B8", letterSpacing: "0.1em" }}>
                 Dimension Scores
               </p>
               <FitScoreRing score={startup.fitScore} />
@@ -244,11 +184,7 @@ function StartupModal({ startup, onClose }: { startup: Startup; onClose: () => v
             <div className="flex flex-col gap-4">
               {SCORE_KEYS.map((key) => (
                 <div key={key}>
-                  <div className="flex justify-between mb-1.5">
-                    <span className="text-xs font-medium" style={{ color: "#94A3B8" }}>
-                      {SCORE_LABELS[key]}
-                    </span>
-                  </div>
+                  <span className="text-xs font-medium block mb-1.5" style={{ color: "#64748B" }}>{SCORE_LABELS[key]}</span>
                   <ScoreBar score={startup.scores[key]} />
                 </div>
               ))}
@@ -256,116 +192,72 @@ function StartupModal({ startup, onClose }: { startup: Startup; onClose: () => v
           </div>
         </div>
 
-        {/* Tags + founded */}
+        {/* Tags */}
         <div className="px-8 py-5 flex items-center gap-3">
           <div className="flex flex-wrap gap-2">
             {startup.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs px-2.5 py-1 rounded-full"
-                style={{
-                  background: "rgba(255,255,255,0.06)",
-                  color: "#94A3B8",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                }}
-              >
+              <span key={tag} className="text-xs px-2.5 py-1 rounded-full" style={{ background: "#F8F9FC", color: "#64748B", border: "1px solid #E2E8F0" }}>
                 {tag}
               </span>
             ))}
           </div>
-          <span className="ml-auto text-xs" style={{ color: "#475569" }}>
-            Founded {startup.founded}
-          </span>
+          <span className="ml-auto text-xs" style={{ color: "#CBD5E1" }}>Founded {startup.founded}</span>
         </div>
       </motion.div>
     </motion.div>
   );
 }
 
-function StartupCard({
-  startup,
-  onClick,
-  index,
-}: {
-  startup: Startup;
-  onClick: () => void;
-  index: number;
-}) {
-  const sc = SECTOR_COLORS[startup.sector] ?? { color: "#C9A84C", bg: "rgba(201,168,76,0.12)" };
-
+function StartupCard({ startup, onClick, index }: { startup: Startup; onClick: () => void; index: number }) {
+  const sectorColor = SECTOR_COLORS[startup.sector] ?? "#C9A84C";
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.96 }}
+      exit={{ opacity: 0, scale: 0.97 }}
       transition={{ duration: 0.3, delay: index * 0.04 }}
-      whileHover={{ y: -4, boxShadow: "0 12px 40px rgba(0,0,0,0.35)" }}
       onClick={onClick}
-      className="startup-card rounded-2xl p-6 cursor-pointer"
-      style={{
-        background: "#162035",
-        border: "1px solid rgba(255,255,255,0.07)",
-        transition: "border-color 0.25s ease",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)";
-      }}
+      className="startup-card rounded-2xl p-6 cursor-pointer bg-white"
+      style={{ border: "1px solid #E2E8F0", boxShadow: "var(--shadow-sm)" }}
     >
-      <div className="flex items-start justify-between mb-3">
+      {/* Sector label + fit score */}
+      <div className="flex items-start justify-between mb-4">
         <span
-          className="text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"
-          style={{
-            background: sc.bg,
-            color: sc.color,
-            letterSpacing: "0.06em",
-          }}
+          className="text-xs font-bold uppercase tracking-wider"
+          style={{ color: sectorColor, letterSpacing: "0.1em" }}
         >
           {startup.sector}
         </span>
-        <div className="flex flex-col items-end ml-3">
+        <div className="flex flex-col items-end ml-2 flex-shrink-0">
           <span
-            className="text-2xl font-bold leading-none"
-            style={{ color: "#C9A84C", fontVariantNumeric: "tabular-nums" }}
+            className="font-bold leading-none"
+            style={{ color: "#0B1426", fontSize: "1.6rem", fontVariantNumeric: "tabular-nums", letterSpacing: "-0.02em" }}
           >
             {startup.fitScore}
           </span>
-          <span className="text-xs mt-0.5" style={{ color: "#475569" }}>
-            fit score
-          </span>
+          <span className="text-xs mt-0.5" style={{ color: "#94A3B8" }}>fit score</span>
         </div>
       </div>
 
-      <h3 className="font-bold text-base mb-2" style={{ color: "white" }}>
+      <h3 className="font-bold text-base mb-2" style={{ color: "#0F172A", lineHeight: 1.3 }}>
         {startup.name}
       </h3>
 
-      <p
-        className="text-sm mb-5 line-clamp-2"
-        style={{ color: "#94A3B8", lineHeight: 1.6 }}
-      >
+      <p className="text-sm mb-5 line-clamp-2" style={{ color: "#64748B", lineHeight: 1.65 }}>
         {startup.description}
       </p>
 
       <div className="flex items-center justify-between">
         <span
           className="text-xs font-medium px-2.5 py-1 rounded-lg"
-          style={{
-            background: "rgba(255,255,255,0.06)",
-            color: "#94A3B8",
-          }}
+          style={{ background: "#F8F9FC", color: "#64748B", border: "1px solid #E2E8F0" }}
         >
           {startup.stage}
         </span>
-        <span
-          className="text-xs font-semibold flex items-center gap-1"
-          style={{ color: "#C9A84C" }}
-        >
+        <span className="text-xs font-semibold flex items-center gap-1" style={{ color: "#C9A84C" }}>
           View analysis
-          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
           </svg>
         </span>
@@ -378,9 +270,7 @@ export default function StartupScoring() {
   const sectionRef = useRef<HTMLElement>(null);
   const [sector, setSector] = useState("All");
   const [selected, setSelected] = useState<Startup | null>(null);
-
-  const filtered =
-    sector === "All" ? startups : startups.filter((s) => s.sector === sector);
+  const filtered = sector === "All" ? startups : startups.filter((s) => s.sector === sector);
 
   useEffect(() => {
     import("gsap").then(({ gsap }) => {
@@ -388,30 +278,15 @@ export default function StartupScoring() {
         gsap.registerPlugin(ScrollTrigger);
         const el = sectionRef.current;
         if (!el) return;
-
         gsap.fromTo(
           el.querySelector(".section-header"),
-          { opacity: 0, x: -40 },
-          {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: { trigger: el, start: "top 75%" },
-          }
+          { opacity: 0, x: -30 },
+          { opacity: 1, x: 0, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 78%" } }
         );
-
         gsap.fromTo(
-          el.querySelector(".rubric-bar"),
+          el.querySelector(".rubric-row"),
           { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power3.out",
-            delay: 0.2,
-            scrollTrigger: { trigger: el, start: "top 75%" },
-          }
+          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", delay: 0.1, scrollTrigger: { trigger: el, start: "top 78%" } }
         );
       });
     });
@@ -421,64 +296,35 @@ export default function StartupScoring() {
     <section
       ref={sectionRef}
       id="sourcing"
-      className="py-28"
-      style={{ background: "#0D1829", borderTop: "1px solid rgba(255,255,255,0.06)" }}
+      style={{
+        background: "white",
+        paddingTop: 112,
+        paddingBottom: 112,
+        borderTop: "1px solid #E2E8F0",
+      }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-        {/* Header */}
-        <div className="section-header mb-14" style={{ opacity: 0 }}>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-px" style={{ background: "#C9A84C" }} />
-            <span
-              className="text-xs font-semibold tracking-widest uppercase"
-              style={{ color: "#C9A84C", letterSpacing: "0.12em" }}
-            >
-              Curated Database
-            </span>
-          </div>
-          <h2
-            className="font-bold mb-4"
-            style={{
-              fontSize: "clamp(2rem, 4vw, 3rem)",
-              color: "white",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.15,
-            }}
-          >
-            Startup Sourcing and Scoring
-          </h2>
-          <p
-            style={{ color: "#94A3B8", maxWidth: 520, lineHeight: 1.7, fontSize: "0.95rem", marginBottom: 28 }}
-          >
-            {startups.length} emerging companies across LDV focus areas, each scored on a five-dimension rubric reflecting the criteria that matter at the early stage.
-          </p>
+      <div className="container-lg">
+        <SectionHeader />
 
+        {/* Filter + rubric row */}
+        <div className="rubric-row mb-10" style={{ opacity: 0 }}>
           {/* Sector filter */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mb-8">
             {SECTORS.map((s) => {
               const active = sector === s;
-              const sc = SECTOR_COLORS[s];
+              const color = SECTOR_COLORS[s] ?? "#C9A84C";
               return (
                 <motion.button
                   key={s}
                   onClick={() => setSector(s)}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
+                  whileTap={{ scale: 0.96 }}
                   className="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-150"
                   style={{
-                    background: active
-                      ? s === "All"
-                        ? "#C9A84C"
-                        : sc?.bg ?? "rgba(201,168,76,0.12)"
-                      : "rgba(255,255,255,0.05)",
-                    color: active
-                      ? s === "All"
-                        ? "#0B1426"
-                        : sc?.color ?? "#C9A84C"
-                      : "#94A3B8",
+                    background: active ? (s === "All" ? "#0B1426" : `${color}14`) : "#F8F9FC",
+                    color: active ? (s === "All" ? "white" : color) : "#64748B",
                     border: active
-                      ? `1px solid ${s === "All" ? "transparent" : sc?.color ?? "#C9A84C"}30`
-                      : "1px solid rgba(255,255,255,0.08)",
+                      ? `1px solid ${s === "All" ? "#0B1426" : color}`
+                      : "1px solid #E2E8F0",
                   }}
                 >
                   {s}
@@ -491,41 +337,25 @@ export default function StartupScoring() {
               );
             })}
           </div>
-        </div>
 
-        {/* Rubric bar */}
-        <div
-          className="rubric-bar rounded-2xl p-5 mb-10 grid grid-cols-5 gap-4"
-          style={{
-            background: "#162035",
-            border: "1px solid rgba(255,255,255,0.07)",
-            opacity: 0,
-          }}
-        >
-          {SCORE_KEYS.map((key) => (
-            <div key={key} className="text-center">
-              <div
-                className="text-sm font-semibold mb-1"
-                style={{ color: "white" }}
-              >
-                {SCORE_LABELS[key]}
+          {/* Rubric bar */}
+          <div
+            className="rounded-2xl grid grid-cols-5 gap-4 p-5"
+            style={{ background: "#F8F9FC", border: "1px solid #E2E8F0" }}
+          >
+            {SCORE_KEYS.map((key) => (
+              <div key={key} className="text-center">
+                <div className="text-sm font-semibold mb-1" style={{ color: "#0F172A" }}>
+                  {SCORE_LABELS[key]}
+                </div>
+                <div className="text-xs" style={{ color: "#94A3B8" }}>scored 1-10</div>
               </div>
-              <div className="text-xs" style={{ color: "#475569" }}>
-                scored 1-10
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 16,
-          }}
-          className="startup-grid"
-        >
+        <div className="startup-grid">
           <AnimatePresence mode="popLayout">
             {filtered.map((startup, i) => (
               <StartupCard
@@ -540,9 +370,7 @@ export default function StartupScoring() {
       </div>
 
       <AnimatePresence>
-        {selected && (
-          <StartupModal startup={selected} onClose={() => setSelected(null)} />
-        )}
+        {selected && <StartupModal startup={selected} onClose={() => setSelected(null)} />}
       </AnimatePresence>
     </section>
   );
