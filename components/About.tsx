@@ -123,14 +123,11 @@ export default function About() {
               style={{ background: "white", border: "1px solid #E2E8F0", boxShadow: "var(--shadow-sm)", opacity: 0 }}
             >
               <div className="mb-6 pb-6" style={{ borderBottom: "1px solid #F1F5F9" }}>
-                <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#C9A84C", letterSpacing: "0.12em" }}>
-                  Built by
-                </p>
-                <h3 className="text-2xl font-bold mb-0.5" style={{ color: "#0F172A" }}>Sahil Modi</h3>
-                <p className="text-sm" style={{ color: "#64748B" }}>Applicant, Investment Associate at LDV Partners</p>
+                <h3 className="text-2xl font-bold mb-1" style={{ color: "#0F172A" }}>Sahil Modi</h3>
+                <p className="text-sm font-medium" style={{ color: "#64748B" }}>Applicant, Investment Associate at LDV Partners</p>
               </div>
 
-              <div className="space-y-4 text-sm" style={{ color: "#475569", lineHeight: 1.75 }}>
+              <div className="space-y-4 text-sm mb-6" style={{ color: "#475569", lineHeight: 1.75 }}>
                 <p>
                   This application was built specifically for my Investment Associate application at LDV Partners. It demonstrates the three core skills the role requires: sourcing, thesis development, and technical evaluation, implemented as a working full-stack product.
                 </p>
@@ -139,6 +136,23 @@ export default function About() {
                 </p>
                 <p>
                   I am genuinely excited about the work LDV does at the intersection of AI, robotics, and data, and I want to be part of finding and funding the companies that define the next decade of the technical stack.
+                </p>
+              </div>
+
+              {/* Also Pitching */}
+              <div
+                style={{
+                  borderLeft: "3px solid #C9A84C",
+                  paddingLeft: 20,
+                  paddingTop: 4,
+                  paddingBottom: 4,
+                }}
+              >
+                <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#C9A84C", letterSpacing: "0.12em" }}>
+                  Also Pitching
+                </p>
+                <p className="text-sm" style={{ color: "#475569", lineHeight: 1.75 }}>
+                  Anysphere (maker of Cursor), the AI-first code editor with 150,000 plus paying developers and a $2 billion revenue run rate. LDV invests in software and AI. Cursor is the fastest-growing developer tool in history. If LDV had backed it at seed, the return would already be generational. The next Cursor is being built right now by someone in a university lab or a two-person apartment, and finding them before the round is oversubscribed is exactly the sourcing work this role requires.
                 </p>
               </div>
             </div>
@@ -167,10 +181,16 @@ export default function About() {
 
           {/* Right column */}
           <div className="flex flex-col gap-5">
-            {/* Contact card: navy bg */}
+            {/* Contact card: white with gold left border */}
             <div
               className="about-card rounded-2xl p-7"
-              style={{ background: "#0B1426", opacity: 0 }}
+              style={{
+                background: "white",
+                border: "1px solid #E2E8F0",
+                borderLeft: "3px solid #C9A84C",
+                boxShadow: "var(--shadow-sm)",
+                opacity: 0,
+              }}
             >
               <p className="text-xs font-bold uppercase tracking-widest mb-6" style={{ color: "#C9A84C", letterSpacing: "0.14em" }}>
                 Get in Touch
@@ -188,13 +208,13 @@ export default function About() {
                   >
                     <div
                       className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                      style={{ background: "rgba(201,168,76,0.15)", color: "#C9A84C" }}
+                      style={{ background: "rgba(201,168,76,0.1)", color: "#C9A84C" }}
                     >
                       {link.icon}
                     </div>
                     <div>
-                      <p className="text-xs font-medium mb-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>{link.label}</p>
-                      <p className="text-sm font-semibold" style={{ color: "white" }}>{link.value}</p>
+                      <p className="text-xs font-medium mb-0.5" style={{ color: "#94A3B8" }}>{link.label}</p>
+                      <p className="text-sm font-semibold" style={{ color: "#0F172A" }}>{link.value}</p>
                     </div>
                   </motion.a>
                 ))}

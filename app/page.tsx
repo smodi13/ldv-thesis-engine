@@ -5,12 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import Hero from "../components/Hero";
 import ThesisGenerator from "../components/ThesisGenerator";
 import StartupScoring from "../components/StartupScoring";
+import SourcingSection from "../components/SourcingSection";
 import About from "../components/About";
 
 const NAV_ITEMS = [
   { id: "hero", label: "Home" },
   { id: "thesis", label: "Thesis Generator" },
   { id: "sourcing", label: "Startup Sourcing" },
+  { id: "sourced", label: "Sourced by Sahil" },
   { id: "about", label: "About" },
 ];
 
@@ -176,6 +178,7 @@ export default function Home() {
         <Hero thesisCount={thesisCount} onNavigate={handleNavigate} />
         <ThesisGenerator onNewThesis={() => setThesisCount((c) => c + 1)} />
         <StartupScoring />
+        <SourcingSection />
         <About />
         <footer
           style={{

@@ -261,14 +261,20 @@ export default function Hero({ thesisCount, onNavigate }: HeroProps) {
         >
           <motion.button
             onClick={() => onNavigate("thesis")}
-            whileHover={{ scale: 1.03, boxShadow: "0 8px 30px rgba(11,20,38,0.2)" }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02, boxShadow: "0 10px 36px rgba(11,20,38,0.25)" }}
+            whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
-            className="px-8 py-3.5 rounded-xl font-bold text-sm"
             style={{
               background: "#0B1426",
               color: "white",
-              letterSpacing: "0.02em",
+              fontSize: "1rem",
+              fontWeight: 700,
+              padding: "14px 32px",
+              borderRadius: 10,
+              letterSpacing: "0.01em",
+              border: "2px solid #0B1426",
+              cursor: "pointer",
+              whiteSpace: "nowrap",
             }}
           >
             Generate a Thesis
@@ -276,15 +282,20 @@ export default function Hero({ thesisCount, onNavigate }: HeroProps) {
 
           <motion.button
             onClick={() => onNavigate("sourcing")}
-            whileHover={{ scale: 1.03, background: "rgba(11,20,38,0.05)" }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02, background: "rgba(11,20,38,0.04)" }}
+            whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
-            className="px-8 py-3.5 rounded-xl font-bold text-sm"
             style={{
               color: "#0B1426",
-              border: "1.5px solid #0B1426",
+              fontSize: "1rem",
+              fontWeight: 700,
+              padding: "14px 32px",
+              borderRadius: 10,
+              letterSpacing: "0.01em",
+              border: "2px solid #0B1426",
               background: "transparent",
-              letterSpacing: "0.02em",
+              cursor: "pointer",
+              whiteSpace: "nowrap",
             }}
           >
             Browse Startups
