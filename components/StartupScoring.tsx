@@ -126,8 +126,20 @@ function StartupModal({ startup, onClose }: { startup: Startup; onClose: () => v
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <span
-                  className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"
-                  style={{ color: sectorColor, background: `${sectorColor}14`, letterSpacing: "0.08em" }}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    color: sectorColor,
+                    background: `${sectorColor}14`,
+                    fontSize: "0.7rem",
+                    fontWeight: 700,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    padding: "4px 10px",
+                    borderRadius: 9999,
+                    whiteSpace: "nowrap",
+                    minWidth: 28,
+                  }}
                 >
                   {startup.sector}
                 </span>
@@ -224,8 +236,20 @@ function StartupCard({ startup, onClick, index }: { startup: Startup; onClick: (
       {/* Sector label + fit score */}
       <div className="flex items-start justify-between mb-4">
         <span
-          className="text-xs font-bold uppercase tracking-wider"
-          style={{ color: sectorColor, letterSpacing: "0.1em" }}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            color: sectorColor,
+            fontSize: "0.7rem",
+            fontWeight: 700,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            padding: "3px 8px",
+            background: `${sectorColor}14`,
+            borderRadius: 6,
+            minWidth: 28,
+            whiteSpace: "nowrap",
+          }}
         >
           {startup.sector}
         </span>
@@ -309,7 +333,7 @@ export default function StartupScoring() {
         {/* Filter + rubric row */}
         <div className="rubric-row mb-10" style={{ opacity: 0 }}>
           {/* Sector filter */}
-          <div className="flex flex-wrap gap-2 mb-8">
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 32 }}>
             {SECTORS.map((s) => {
               const active = sector === s;
               const color = SECTOR_COLORS[s] ?? "#C9A84C";
@@ -318,18 +342,26 @@ export default function StartupScoring() {
                   key={s}
                   onClick={() => setSector(s)}
                   whileTap={{ scale: 0.96 }}
-                  className="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-150"
                   style={{
                     background: active ? (s === "All" ? "#0B1426" : `${color}14`) : "#F8F9FC",
                     color: active ? (s === "All" ? "white" : color) : "#64748B",
                     border: active
                       ? `1px solid ${s === "All" ? "#0B1426" : color}`
                       : "1px solid #E2E8F0",
+                    padding: "7px 16px",
+                    borderRadius: 9999,
+                    fontSize: "0.875rem",
+                    fontWeight: 600,
+                    whiteSpace: "nowrap",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    transition: "background 0.15s, border-color 0.15s, color 0.15s",
                   }}
                 >
                   {s}
                   {s !== "All" && (
-                    <span className="ml-1.5 text-xs opacity-60">
+                    <span style={{ marginLeft: 5, fontSize: "0.75rem", opacity: 0.6 }}>
                       {startups.filter((x) => x.sector === s).length}
                     </span>
                   )}

@@ -281,17 +281,25 @@ export default function ThesisGenerator({ onNewThesis }: ThesisGeneratorProps) {
               >
                 Examples
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                 {EXAMPLE_THEMES.map((t) => (
                   <motion.button
                     key={t}
                     onClick={() => setTheme(t)}
                     whileTap={{ scale: 0.96 }}
-                    className="text-xs px-3 py-1.5 rounded-full font-medium transition-all duration-150"
                     style={{
                       border: "1.5px solid #0B1426",
                       color: "#0B1426",
                       background: "transparent",
+                      fontSize: "0.75rem",
+                      fontWeight: 500,
+                      padding: "6px 14px",
+                      borderRadius: 9999,
+                      whiteSpace: "nowrap",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+                      transition: "background 0.15s, border-color 0.15s, color 0.15s",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.background = "#C9A84C";
