@@ -132,7 +132,7 @@ export default function ThesisGenerator({ onNewThesis }: ThesisGeneratorProps) {
   const activeThesis = theses.find((t) => t.id === activeId);
 
   useEffect(() => {
-    import("gsap").then(({ gsap }) => {
+    import("gsap").then(({ default: gsap }) => {
       import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
         gsap.registerPlugin(ScrollTrigger);
         const el = sectionRef.current;

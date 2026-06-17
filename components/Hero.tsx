@@ -45,7 +45,7 @@ export default function Hero({ thesisCount, onNavigate }: HeroProps) {
   useEffect(() => setThesisDisplay(thesisCount), [thesisCount]);
 
   useEffect(() => {
-    import("gsap").then(({ gsap }) => {
+    import("gsap").then(({ default: gsap }) => {
       import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
         gsap.registerPlugin(ScrollTrigger);
 

@@ -273,7 +273,7 @@ export default function StartupScoring() {
   const filtered = sector === "All" ? startups : startups.filter((s) => s.sector === sector);
 
   useEffect(() => {
-    import("gsap").then(({ gsap }) => {
+    import("gsap").then(({ default: gsap }) => {
       import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
         gsap.registerPlugin(ScrollTrigger);
         const el = sectionRef.current;

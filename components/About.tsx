@@ -73,7 +73,7 @@ export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    import("gsap").then(({ gsap }) => {
+    import("gsap").then(({ default: gsap }) => {
       import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
         gsap.registerPlugin(ScrollTrigger);
         const el = sectionRef.current;
