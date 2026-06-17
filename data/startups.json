@@ -1,0 +1,290 @@
+[
+  {
+    "id": 1,
+    "name": "Anthropic",
+    "sector": "AI",
+    "description": "AI safety company building reliable, interpretable AI systems, creator of Claude.",
+    "stage": "Late Stage",
+    "website": "anthropic.com",
+    "founded": 2021,
+    "scores": {
+      "technicalDefensibility": 9,
+      "marketSize": 10,
+      "teamStrength": 10,
+      "timing": 9,
+      "traction": 9
+    },
+    "fitScore": 94,
+    "tags": ["LLM", "AI Safety", "Foundation Models"]
+  },
+  {
+    "id": 2,
+    "name": "Mistral AI",
+    "sector": "AI",
+    "description": "European AI lab building open-weight and proprietary frontier language models.",
+    "stage": "Series B",
+    "website": "mistral.ai",
+    "founded": 2023,
+    "scores": {
+      "technicalDefensibility": 8,
+      "marketSize": 10,
+      "teamStrength": 9,
+      "timing": 9,
+      "traction": 8
+    },
+    "fitScore": 88,
+    "tags": ["LLM", "Open Source", "Foundation Models"]
+  },
+  {
+    "id": 3,
+    "name": "Perplexity",
+    "sector": "AI",
+    "description": "AI-native search engine that answers questions with real-time web grounding.",
+    "stage": "Series C",
+    "website": "perplexity.ai",
+    "founded": 2022,
+    "scores": {
+      "technicalDefensibility": 7,
+      "marketSize": 10,
+      "teamStrength": 8,
+      "timing": 9,
+      "traction": 9
+    },
+    "fitScore": 86,
+    "tags": ["Search", "AI Applications", "Consumer"]
+  },
+  {
+    "id": 4,
+    "name": "Sierra",
+    "sector": "AI",
+    "description": "Conversational AI platform building autonomous customer service agents for enterprises.",
+    "stage": "Series B",
+    "website": "sierra.ai",
+    "founded": 2023,
+    "scores": {
+      "technicalDefensibility": 7,
+      "marketSize": 9,
+      "teamStrength": 9,
+      "timing": 9,
+      "traction": 8
+    },
+    "fitScore": 84,
+    "tags": ["AI Agents", "Enterprise", "Customer Service"]
+  },
+  {
+    "id": 5,
+    "name": "Physical Intelligence",
+    "sector": "Robotics",
+    "description": "Developing generalist AI models for physical robots to perform real-world manipulation tasks.",
+    "stage": "Series A",
+    "website": "physicalintelligence.company",
+    "founded": 2023,
+    "scores": {
+      "technicalDefensibility": 10,
+      "marketSize": 10,
+      "teamStrength": 10,
+      "timing": 8,
+      "traction": 7
+    },
+    "fitScore": 90,
+    "tags": ["Foundation Models", "Manipulation", "Embodied AI"]
+  },
+  {
+    "id": 6,
+    "name": "Skild AI",
+    "sector": "Robotics",
+    "description": "Building a general-purpose robot brain trained on internet-scale data for diverse task performance.",
+    "stage": "Series A",
+    "website": "skild.ai",
+    "founded": 2023,
+    "scores": {
+      "technicalDefensibility": 9,
+      "marketSize": 9,
+      "teamStrength": 9,
+      "timing": 8,
+      "traction": 6
+    },
+    "fitScore": 82,
+    "tags": ["Foundation Models", "General Purpose", "Embodied AI"]
+  },
+  {
+    "id": 7,
+    "name": "Figure",
+    "sector": "Robotics",
+    "description": "Building humanoid robots powered by AI for commercial labor applications.",
+    "stage": "Series B",
+    "website": "figure.ai",
+    "founded": 2022,
+    "scores": {
+      "technicalDefensibility": 8,
+      "marketSize": 10,
+      "teamStrength": 8,
+      "timing": 8,
+      "traction": 8
+    },
+    "fitScore": 84,
+    "tags": ["Humanoid", "Manufacturing", "Labor Automation"]
+  },
+  {
+    "id": 8,
+    "name": "Cursor",
+    "sector": "Software",
+    "description": "AI-first code editor built on VSCode that uses large models to write, edit, and understand code.",
+    "stage": "Series B",
+    "website": "cursor.com",
+    "founded": 2022,
+    "scores": {
+      "technicalDefensibility": 7,
+      "marketSize": 9,
+      "teamStrength": 8,
+      "timing": 10,
+      "traction": 10
+    },
+    "fitScore": 88,
+    "tags": ["Developer Tools", "Code Generation", "IDE"]
+  },
+  {
+    "id": 9,
+    "name": "Replit",
+    "sector": "Software",
+    "description": "Browser-based collaborative coding environment with AI capabilities for building and deploying apps.",
+    "stage": "Series B",
+    "website": "replit.com",
+    "founded": 2016,
+    "scores": {
+      "technicalDefensibility": 7,
+      "marketSize": 9,
+      "teamStrength": 7,
+      "timing": 8,
+      "traction": 8
+    },
+    "fitScore": 78,
+    "tags": ["Developer Tools", "Cloud IDE", "Education"]
+  },
+  {
+    "id": 10,
+    "name": "Vercel",
+    "sector": "Software",
+    "description": "Frontend cloud platform enabling developers to deploy web apps at the edge with zero configuration.",
+    "stage": "Series E",
+    "website": "vercel.com",
+    "founded": 2015,
+    "scores": {
+      "technicalDefensibility": 8,
+      "marketSize": 9,
+      "teamStrength": 9,
+      "timing": 8,
+      "traction": 10
+    },
+    "fitScore": 88,
+    "tags": ["Infrastructure", "Cloud", "Developer Tools"]
+  },
+  {
+    "id": 11,
+    "name": "Chai Discovery",
+    "sector": "Biotech",
+    "description": "Using AI to predict molecular structures and accelerate early-stage drug discovery pipelines.",
+    "stage": "Seed",
+    "website": "chaidiscovery.com",
+    "founded": 2023,
+    "scores": {
+      "technicalDefensibility": 9,
+      "marketSize": 10,
+      "teamStrength": 9,
+      "timing": 9,
+      "traction": 6
+    },
+    "fitScore": 86,
+    "tags": ["Drug Discovery", "Protein Folding", "AI Biology"]
+  },
+  {
+    "id": 12,
+    "name": "Isomorphic Labs",
+    "sector": "Biotech",
+    "description": "Alphabet spinout applying AlphaFold and AI to discover new medicines at molecular scale.",
+    "stage": "Late Stage",
+    "website": "isomorphiclabs.com",
+    "founded": 2021,
+    "scores": {
+      "technicalDefensibility": 10,
+      "marketSize": 10,
+      "teamStrength": 10,
+      "timing": 9,
+      "traction": 7
+    },
+    "fitScore": 92,
+    "tags": ["Drug Discovery", "Protein Structure", "Google DeepMind"]
+  },
+  {
+    "id": 13,
+    "name": "Lila Sciences",
+    "sector": "Biotech",
+    "description": "AI-driven autonomous lab automating experimental biology to compress drug discovery timelines.",
+    "stage": "Series A",
+    "website": "lilasciences.com",
+    "founded": 2023,
+    "scores": {
+      "technicalDefensibility": 9,
+      "marketSize": 10,
+      "teamStrength": 9,
+      "timing": 9,
+      "traction": 6
+    },
+    "fitScore": 86,
+    "tags": ["Lab Automation", "Drug Discovery", "Autonomous Research"]
+  },
+  {
+    "id": 14,
+    "name": "Commonwealth Fusion Systems",
+    "sector": "Deep Tech",
+    "description": "Building compact, high-field fusion power plants using SPARC to achieve net energy gain.",
+    "stage": "Series B",
+    "website": "cfs.energy",
+    "founded": 2018,
+    "scores": {
+      "technicalDefensibility": 10,
+      "marketSize": 10,
+      "teamStrength": 9,
+      "timing": 7,
+      "traction": 8
+    },
+    "fitScore": 88,
+    "tags": ["Fusion Energy", "Climate", "Hard Science"]
+  },
+  {
+    "id": 15,
+    "name": "Base Power Company",
+    "sector": "Deep Tech",
+    "description": "Deploying residential battery systems to provide grid backup and utility-grade power resilience.",
+    "stage": "Series A",
+    "website": "basepower.com",
+    "founded": 2022,
+    "scores": {
+      "technicalDefensibility": 6,
+      "marketSize": 9,
+      "teamStrength": 8,
+      "timing": 9,
+      "traction": 7
+    },
+    "fitScore": 78,
+    "tags": ["Energy Storage", "Grid", "Climate Tech"]
+  },
+  {
+    "id": 16,
+    "name": "Astranis",
+    "sector": "Deep Tech",
+    "description": "Building small geostationary satellites to deliver affordable broadband to underserved regions.",
+    "stage": "Series C",
+    "website": "astranis.com",
+    "founded": 2016,
+    "scores": {
+      "technicalDefensibility": 8,
+      "marketSize": 9,
+      "teamStrength": 8,
+      "timing": 8,
+      "traction": 8
+    },
+    "fitScore": 82,
+    "tags": ["Satellite", "Connectivity", "Space Tech"]
+  }
+]
